@@ -9,6 +9,8 @@
 #endif
 
 #include "resource.h"		// 주 기호입니다.
+#include "ServerSock.h"
+#include "ClientSock.h"
 
 
 // CAdvancedDesignApp:
@@ -27,6 +29,17 @@ public:
 // 구현입니다.
 
 	DECLARE_MESSAGE_MAP()
+
+public:
+	void InitServer(void);
+	CServerSock* m_pServer;
+	CClientSock* m_pClient;
+	void Accept(void);
+	void Connect(CString strIP);
+	void ReceiveData(void);
+	void SendData(CString strData);
+	void CloseChild(void);
+	void CleanUp(void);
 };
 
 extern CAdvancedDesignApp theApp;

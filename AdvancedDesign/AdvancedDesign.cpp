@@ -21,6 +21,8 @@ END_MESSAGE_MAP()
 // CAdvancedDesignApp 생성
 
 CAdvancedDesignApp::CAdvancedDesignApp()
+	: m_pServer(NULL)
+	, m_pClient(NULL)
 {
 	// 다시 시작 관리자 지원
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_RESTART;
@@ -98,3 +100,72 @@ BOOL CAdvancedDesignApp::InitInstance()
 	return FALSE;
 }
 
+
+
+
+void CAdvancedDesignApp::InitServer(void)
+{
+	 m_pServer = new CServerSock;
+     m_pServer->Create(7777);
+     m_pServer->Listen();	
+}
+
+
+void CAdvancedDesignApp::Accept(void)
+{
+	if (m_pClient == NULL)
+	{
+		m_pClient = new CClientSock;
+		m_pServer->Accept(*m_pClient);
+		CString strSock;
+		UINT nPort;
+		m_pClient->GetPeerName(strSock,nPort);
+		((CAdvancedDesignDlg*)m_pMainWnd)->Accept(strSock);
+	}	
+}
+
+
+void CAdvancedDesignApp::Connect(CString strIP)
+{
+	m_pClient = new CClientSock;
+	m_pClient->Create();
+	m_pClient->Connect(strIP, 7777);
+}
+
+
+
+void CAdvancedDesignApp::ReceiveData(void)
+{
+	char temp[MAX_PATH];
+	m_pClient->Receive(temp, sizeof(temp));
+	((CAdvancedDesignDlg*)m_pMainWnd)->ReceiveData(temp);
+}
+
+
+void CAdvancedDesignApp::SendData(CString strData)
+{
+	if (m_pClient)
+	{
+		m_pClient->Send((LPCTSTR)strData, sizeof(TCHAR)*(strData.GetLength()+1));
+	}
+}
+
+
+void CAdvancedDesignApp::CloseChild(void)
+{
+	AfxMessageBox(_T("상대방 연결 끊김"));
+	delete m_pClient;
+	m_pClient = NULL;
+}
+
+
+void CAdvancedDesignApp::CleanUp(void)
+{
+	if(m_pServer)
+		delete m_pServer;
+
+	if(m_pClient)
+		delete m_pClient;
+
+
+}

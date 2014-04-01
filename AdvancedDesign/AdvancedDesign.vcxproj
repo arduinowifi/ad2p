@@ -19,7 +19,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -101,13 +101,19 @@
   <ItemGroup>
     <ClInclude Include="AdvancedDesign.h" />
     <ClInclude Include="AdvancedDesignDlg.h" />
+    <ClInclude Include="ClientSock.h" />
+    <ClInclude Include="CommThread.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ServerSock.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdvancedDesign.cpp" />
     <ClCompile Include="AdvancedDesignDlg.cpp" />
+    <ClCompile Include="ClientSock.cpp" />
+    <ClCompile Include="CommThread.cpp" />
+    <ClCompile Include="ServerSock.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -119,4 +125,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="AdvancedDesign.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
